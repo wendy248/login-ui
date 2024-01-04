@@ -28,7 +28,12 @@
     var url = 'https://6df8-158-140-167-9.ngrok-free.app'
 
     // Fetch CSRF token from the backend
-    fetch(url, { method: 'GET', credentials: 'include' })
+    fetch(url, { method: 'GET', 
+        credentials: 'include',
+        headers: {
+            'ngrok-skip-browser-warning':any,
+        }
+    })
         .then(response => response.json())
         .then(data => {
             // Set CSRF token in the form
@@ -48,6 +53,7 @@
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
                 'X-CSRF-Token': document.getElementById('csrf_cookie').value,
+                'ngrok-skip-browser-warning':any,
             },
             body: new URLSearchParams(new FormData(form)).toString(),
         })
@@ -64,6 +70,9 @@
         fetch(url+'/web',{
             method: 'GET',
             credentials: 'include',
+            headers: {
+                'ngrok-skip-browser-warning':any,
+            }
         })
         .then(response => response.json())
         .then(data => {
