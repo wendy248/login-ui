@@ -44,7 +44,7 @@
     // Function to submit the form
     function submitForm() {
         const form = document.getElementById('csrfForm');
-        console.log('csrf_cookie:', document.getElementById('csrf_cookie').value);
+        // console.log('csrf_cookie:', document.getElementById('csrf_cookie').value);
         // document.cookie = document.getElementById('csrf_cookie').value;
 
         fetch(url+'/submit', {
@@ -52,7 +52,7 @@
             credentials: 'include',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
-                'X-CSRF-Token': document.getElementById('csrf_token').value,
+                // 'X-CSRF-Token': document.getElementById('csrf_token').value,
                 'ngrok-skip-browser-warning':true,
             },
             body: new URLSearchParams(new FormData(form)).toString(),
