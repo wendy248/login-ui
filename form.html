@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSRF Demo</title>
+</head>
+<body>
+
+<h2>CSRF Demo</h2>
+
+<form id="csrfForm">
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="username" required><br><br>
+
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" required><br><br>
+
+    <!-- CSRF Token will be added dynamically -->
+    <input type="hidden" id="csrf_token" name="csrf_token">
+    <input type="hidden" id="csrf_cookie" name="csrf_cookie_name">
+
+    <button type="button" onclick="submitForm()">Submit</button>
+    <button type="button" onclick="generateCSRFCookie()">Generate Token</button>
+</form>
+
+<script>
+    // Fetch CSRF token from the backend
+    fetch('http://localhost:8080', { method: 'GET', credentials: 'include' })
+        .then(response => response.json())
+        .then(data => {
+            // Set CSRF token in the form
+            document.getElementById('csrf_token').value = data.csrf_token;
+        })
+        .catch(error => console.error('Error fetching CSRF token:', error));
+
+    // Function to submit the form
+    function submitForm() {
+        const form = document.getElementById('csrfForm');
+        console.log('csrf_cookie:', document.getElementById('csrf_cookie').value);
+        // document.cookie = document.getElementById('csrf_cookie').value;
+
+        fetch('http://localhost:8080/submit', {
+            method: 'POST',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'X-CSRF-Token': document.getElementById('csrf_cookie').value,
+            },
+            body: new URLSearchParams(new FormData(form)).toString(),
+        })
+    
+        .then(response => response.text())
+        .then(data => {
+            console.log(data)
+        })
+        .catch(error => console.error('Error submitting form:', error));
+    }
+
+
+    function generateCSRFCookie() {
+        fetch('http://localhost:8080/web',{
+            method: 'GET',
+            credentials: 'include',
+        })
+        .then(response => response.json())
+        .then(data => {
+            
+            // Set CSRF token in the form
+            document.getElementById('csrf_cookie').value = data.csrf_cookie;
+            // console.log('cookie:', data.csrf_cookie)
+            
+        })
+        .catch(error => console.error('Error fetching CSRF token:', error));
+    }
+</script>
+
+</body>
+</html>
