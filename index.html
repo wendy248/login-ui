@@ -31,7 +31,7 @@
     fetch(url, { method: 'GET', 
         credentials: 'include',
         headers: {
-            'ngrok-skip-browser-warning':any,
+            'ngrok-skip-browser-warning':true,
         }
     })
         .then(response => response.json())
@@ -53,7 +53,7 @@
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
                 'X-CSRF-Token': document.getElementById('csrf_cookie').value,
-                'ngrok-skip-browser-warning':any,
+                'ngrok-skip-browser-warning':true,
             },
             body: new URLSearchParams(new FormData(form)).toString(),
         })
@@ -71,7 +71,7 @@
             method: 'GET',
             credentials: 'include',
             headers: {
-                'ngrok-skip-browser-warning':any,
+                'ngrok-skip-browser-warning':true,
             }
         })
         .then(response => response.json())
