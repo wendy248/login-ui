@@ -78,7 +78,7 @@
         .then(data => {
             
             // Set CSRF token in the form
-            document.getElementById('csrf_cookie').value = data.csrf_cookie;
+            document.getElementById('csrf_token').value = data.csrf_token;
             // console.log('cookie:', data.csrf_cookie);
             
         })
