@@ -44,7 +44,7 @@
     // Function to submit the form
     function submitForm() {
         const form = document.getElementById('csrfForm');
-        // console.log('csrf_cookie:', document.getElementById('csrf_cookie').value);
+        console.log('csrf_cookie:', document.getElementById('csrf_cookie').value);
         // document.cookie = document.getElementById('csrf_cookie').value;
 
         fetch(url+'/submit', {
